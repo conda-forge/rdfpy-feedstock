@@ -1,0 +1,53 @@
+schema_version: 1
+
+context:
+  name: rdfpy
+  version: "2.0.0"
+
+package:
+  name: ${{ name|lower }}
+  version: ${{ version }}
+
+source:
+  url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/rdfpy-${{ version }}.tar.gz
+  sha256: f295bb2ec523ab43494382d576b7ade026f68426ede81153357770e0c5c252ba
+
+build:
+  number: 1
+  noarch: python
+  script: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+
+requirements:
+  host:
+    - pip
+    - python ${{ python_min }}.*
+    - setuptools
+  run:
+    - matplotlib-base
+    - numpy
+    - python >=${{ python_min }}
+    - scipy
+
+tests:
+  - python:
+      imports:
+        - rdfpy
+      pip_check: true
+      python_version:
+        - ${{ python_min }}
+        - "*"
+
+about:
+  license: MIT
+  license_file: LICENSE
+  summary: rdfpy is a Python library for fast computation of 2D and 3D radial distribution functions.
+  description: |
+    rdfpy is a Python library for fast computation of 2D and 3D radial
+    distribution functions.
+  homepage: https://github.com/by256/rdfpy
+  repository: https://github.com/by256/rdfpy
+  documentation: https://rdfpy.readthedocs.io/
+
+extra:
+  recipe-maintainers:
+    - jan-janssen
